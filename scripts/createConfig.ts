@@ -144,6 +144,18 @@ export const ONE_DAY = 60 * 60 * 24;
   const errorIndex = [];
 
   for (const feeConfig of configData.feeConfig) {
+    const configAccount = deriveConfigAddress(
+      new BN(feeConfig.index),
+      cpAmm._program.programId
+    );
+    const configState = await program.account.config.fetchNullable(
+      configAccount
+    );
+    // ignore if existed
+    if (configState) {
+      continue;
+    }
+
     try {
       const {
         cliffFeeNumerator,
@@ -165,7 +177,7 @@ export const ONE_DAY = 60 * 60 * 24;
           },
           protocolFeePercent: 20, // 20% of lp fee
           partnerFeePercent: 0,
-          referralFeePercent: 0,
+          referralFeePercent: 20, // 20 % of protocol fee
           dynamicFee: feeConfig.dynamicFee ? dynamicFeeConfig : null,
         },
         sqrtMinPrice: new BN(MIN_SQRT_PRICE),
@@ -175,11 +187,6 @@ export const ONE_DAY = 60 * 60 * 24;
         activationType: 1, // default timestamp
         collectFeeMode: feeConfig.collectFeeMode,
       };
-
-      const configAccount = deriveConfigAddress(
-        createConfigParams.index,
-        cpAmm._program.programId
-      );
 
       const transaction = await program.methods
         .createConfig(createConfigParams)
@@ -211,11 +218,14 @@ export const ONE_DAY = 60 * 60 * 24;
     }
   }
 
-  configData.feeConfig = result;
-
-  // save log
-  fs.writeFileSync("./scripts/configCreated.json", JSON.stringify(configData));
-
+  // write log
+  if (result.length > 0) {
+    configData.feeConfig = result;
+    fs.writeFileSync(
+      "./scripts/configCreated.json",
+      JSON.stringify(configData)
+    );
+  }
   if (errorIndex.length > 0) {
     fs.writeFileSync(
       "./scripts/createConfig_errors.json",
