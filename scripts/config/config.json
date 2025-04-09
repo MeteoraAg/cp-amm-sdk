@@ -1,6 +1,6 @@
 {
   "rpcUrl": "https://api.devnet.solana.com",
-  "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+  "keypairFilePath": "id.json",
   "feeConfig": [
     {
       "index": 0,
