@@ -221,18 +221,15 @@ export const ONE_DAY = 60 * 60 * 24;
   // write log
   if (result.length > 0) {
     configData.feeConfig = result;
-
-    // save log
     fs.writeFileSync(
       "./scripts/configCreated.json",
       JSON.stringify(configData)
     );
-
-    if (errorIndex.length > 0) {
-      fs.writeFileSync(
-        "./scripts/createConfig_errors.json",
-        JSON.stringify(errorIndex)
-      );
-    }
+  }
+  if (errorIndex.length > 0) {
+    fs.writeFileSync(
+      "./scripts/createConfig_errors.json",
+      JSON.stringify(errorIndex)
+    );
   }
 })();
