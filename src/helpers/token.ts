@@ -131,25 +131,6 @@ export async function getNftOwner(
   return new PublicKey(owner);
 }
 
-// export async function getAllNftByUser(
-//   connection: Connection,
-//   user: PublicKey,
-//   tokenProgram = TOKEN_2022_PROGRAM_ID
-// ): Promise<string[]> {
-//   const allUserTokenAccounts = await connection.getTokenAccountsByOwner(user, {
-//     programId: tokenProgram,
-//   });
-
-//   const userNfts: string[] = [];
-//   for (const { account } of allUserTokenAccounts.value) {
-//     const tokenAccountData = AccountLayout.decode(account.data);
-//     if (tokenAccountData.amount.toString() === "1") {
-//       userNfts.push(tokenAccountData.mint.toString());
-//     }
-//   }
-//   return userNfts;
-// }
-
 export async function getAllUserPositionNftAccount(
   connection: Connection,
   user: PublicKey
