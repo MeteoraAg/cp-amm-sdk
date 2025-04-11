@@ -1,3 +1,4 @@
+import { bs58 } from "@coral-xyz/anchor/dist/cjs/utils/bytes";
 import {
   AccountLayout,
   createAssociatedTokenAccountIdempotentInstruction,
@@ -13,6 +14,7 @@ import {
 } from "@solana/spl-token";
 import {
   Connection,
+  GetProgramAccountsFilter,
   PublicKey,
   SystemProgram,
   TransactionInstruction,
@@ -129,21 +131,48 @@ export async function getNftOwner(
   return new PublicKey(owner);
 }
 
-export async function getAllNftByUser(
+export async function getAllUserPositionNftAccount(
   connection: Connection,
-  user: PublicKey,
-  tokenProgram = TOKEN_2022_PROGRAM_ID
-): Promise<string[]> {
-  const allUserTokenAccounts = await connection.getTokenAccountsByOwner(user, {
-    programId: tokenProgram,
-  });
+  user: PublicKey
+): Promise<
+  Array<{
+    positionNft: PublicKey;
+    positionNftAccount: PublicKey;
+  }>
+> {
+  const filters: GetProgramAccountsFilter[] = [
+    {
+      memcmp: {
+        offset: 32,
+        bytes: user.toBase58(),
+      },
+    },
+    {
+      memcmp: {
+        offset: 64,
+        bytes: bs58.encode(Buffer.from([1, 0, 0, 0, 0, 0, 0, 0])), // 1
+      },
+    },
+  ];
 
-  const userNfts: string[] = [];
-  for (const { account } of allUserTokenAccounts.value) {
-    const tokenAccountData = AccountLayout.decode(account.data);
-    if (tokenAccountData.amount.toString() === "1") {
-      userNfts.push(tokenAccountData.mint.toString());
+  const tokenAccountsRaw = await connection.getProgramAccounts(
+    TOKEN_2022_PROGRAM_ID,
+    {
+      filters,
     }
+  );
+
+  const userPositionNftAccount: Array<{
+    positionNft: PublicKey;
+    positionNftAccount: PublicKey;
+  }> = [];
+  for (const { account, pubkey } of tokenAccountsRaw) {
+    const tokenAccountData = AccountLayout.decode(account.data);
+    userPositionNftAccount.push({
+      positionNft: tokenAccountData.mint,
+      positionNftAccount: pubkey,
+    });
   }
-  return userNfts;
+
+  return userPositionNftAccount;
 }
