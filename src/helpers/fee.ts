@@ -115,7 +115,7 @@ export function getFeeNumerator(
       new BN(binStep),
       new BN(variableFeeControl)
     );
-    feeNumerator.add(dynamicFeeNumberator);
+    feeNumerator = feeNumerator.add(dynamicFeeNumberator);
   }
   return feeNumerator.gt(new BN(MAX_FEE_NUMERATOR))
     ? new BN(MAX_FEE_NUMERATOR)
