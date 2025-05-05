@@ -144,10 +144,7 @@ export const ONE_DAY = 60 * 60 * 24;
   const errorIndex = [];
 
   for (const feeConfig of configData.feeConfig) {
-    const configAccount = deriveConfigAddress(
-      new BN(feeConfig.index),
-      cpAmm._program.programId
-    );
+    const configAccount = deriveConfigAddress(new BN(feeConfig.index));
     const configState = await program.account.config.fetchNullable(
       configAccount
     );
