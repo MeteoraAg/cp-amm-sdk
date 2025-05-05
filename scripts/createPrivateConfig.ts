@@ -10,6 +10,7 @@ import {
   CpAmm,
   deriveConfigAddress,
   FEE_DENOMINATOR,
+  getDynamicFeeParams,
   getSqrtPriceFromPrice,
 } from "../src";
 import privateConfig from "./config/privateConfig.json";
@@ -60,44 +61,10 @@ import Decimal from "decimal.js";
 
   let dynamicFee = null;
   if (privateConfig.dynamicFee) {
-    const priceRatio = privateConfig.maxPriceChangeBps / BASIS_POINT_MAX + 1;
-    // Q64
-    const sqrtPriceRatioQ64 = new BN(
-      Decimal.sqrt(priceRatio.toString())
-        .mul(Decimal.pow(2, 64))
-        .floor()
-        .toFixed()
+    dynamicFee = getDynamicFeeParams(
+      privateConfig.baseFeeBps,
+      privateConfig.maxPriceChangeBps
     );
-    const ONE = new BN(1).shln(64);
-    const deltaBinId = sqrtPriceRatioQ64
-      .sub(ONE)
-      .div(new BN(1844674407370955))
-      .muln(2);
-
-    const maxVolatilityAccumulator = new BN(deltaBinId.muln(BASIS_POINT_MAX));
-
-    const squareVfaBin = maxVolatilityAccumulator.mul(new BN(1)).pow(new BN(2));
-
-    const baseFeeNumerator = new BN(
-      privateConfig.baseFeeBps * FEE_DENOMINATOR
-    ).divn(BASIS_POINT_MAX);
-
-    const maxDynamicFeeNumerator = baseFeeNumerator.muln(20).divn(100); // default max dynamic fee = 20% of base fee.
-    const vFee = maxDynamicFeeNumerator
-      .mul(new BN(100_000_000_000))
-      .sub(new BN(99_999_999_999));
-
-    const variableFeeControl = vFee.div(squareVfaBin);
-
-    dynamicFee = {
-      binStep: 1,
-      binStepU128: new BN("1844674407370955"),
-      filterPeriod: 10,
-      decayPeriod: 120,
-      reductionFactor: 5000,
-      maxVolatilityAccumulator: maxVolatilityAccumulator.toNumber(),
-      variableFeeControl: variableFeeControl.toNumber(),
-    };
   }
   const createConfigParams = {
     index: new BN(privateConfig.configIndex),
@@ -135,6 +102,7 @@ import Decimal from "decimal.js";
     await connection.getLatestBlockhash()
   ).blockhash;
   transaction.sign(wallet);
+  console.log(await connection.simulateTransaction(transaction));
 
   // const signature = await sendAndConfirmRawTransaction(
   //   connection,
