@@ -36,7 +36,7 @@ import { MAX_SQRT_PRICE } from "../tests/bankrun-utils";
       } = feeConfig.baseFee;
 
       if (feeConfig.dynamicFee) {
-        const baseFeeBps = feeNumeratorToBps(new BN(cliffFeeNumerator));
+        const baseFeeBps = feeNumeratorToBps(new BN(feeConfig.baseFeeValue));
         const dynamicFee = getDynamicFeeParams(baseFeeBps);
         const createConfigParams = {
           index: new BN(feeConfig.index),
