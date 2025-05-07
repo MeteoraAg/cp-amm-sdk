@@ -85,7 +85,6 @@ import {
   calculateTransferFeeIncludedAmount,
   getAmountBFromLiquidityDelta,
   getAmountAFromLiquidityDelta,
-  getAllUserPositionNftAccount,
   getAvailableVestingLiquidity,
   isVestingComplete,
   getAllPositionNftAccountByOwner,
@@ -117,6 +116,7 @@ export class CpAmm {
    *          The token account addresses and any instructions needed to create them
    */
   private async prepareTokenAccounts(
+    payer: PublicKey,
     owner: PublicKey,
     tokenAMint: PublicKey,
     tokenBMint: PublicKey,
@@ -136,7 +136,7 @@ export class CpAmm {
         this._program.provider.connection,
         tokenAMint,
         owner,
-        owner,
+        payer,
         true,
         tokenAProgram
       ),
@@ -144,7 +144,7 @@ export class CpAmm {
         this._program.provider.connection,
         tokenBMint,
         owner,
-        owner,
+        payer,
         true,
         tokenBProgram
       ),
@@ -1165,6 +1165,7 @@ export class CpAmm {
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
       payer,
+      payer,
       tokenAMint,
       tokenBMint,
       tokenAProgram,
@@ -1271,6 +1272,7 @@ export class CpAmm {
       tokenBAta: payerTokenB,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      payer,
       payer,
       tokenAMint,
       tokenBMint,
@@ -1381,6 +1383,7 @@ export class CpAmm {
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
       owner,
+      owner,
       tokenAMint,
       tokenBMint,
       tokenAProgram,
@@ -1479,6 +1482,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      owner,
       owner,
       tokenAMint,
       tokenBMint,
@@ -1585,6 +1589,7 @@ export class CpAmm {
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
       owner,
+      owner,
       tokenAMint,
       tokenBMint,
       tokenAProgram,
@@ -1667,6 +1672,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      owner,
       owner,
       tokenAMint,
       tokenBMint,
@@ -1759,6 +1765,7 @@ export class CpAmm {
       tokenBAta: outputTokenAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      payer,
       payer,
       inputTokenMint,
       outputTokenMint,
@@ -1888,6 +1895,7 @@ export class CpAmm {
    */
   async claimPositionFee(params: ClaimPositionFeeParams): TxBuilder {
     const {
+      feePayer,
       owner,
       pool,
       position,
@@ -1905,6 +1913,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      feePayer ?? owner,
       owner,
       tokenAMint,
       tokenBMint,
@@ -2012,6 +2021,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      owner,
       owner,
       tokenAMint,
       tokenBMint,
@@ -2123,6 +2133,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      owner,
       owner,
       tokenAMint,
       tokenBMint,
@@ -2379,7 +2390,7 @@ export class CpAmm {
    * @returns Transaction builder.
    */
   async claimPartnerFee(params: ClaimPartnerFeeParams): TxBuilder {
-    const { partner, pool, maxAmountA, maxAmountB } = params;
+    const { feePayer, partner, pool, maxAmountA, maxAmountB } = params;
     const poolState = await this.fetchPoolState(pool);
     const {
       tokenAVault,
@@ -2398,6 +2409,7 @@ export class CpAmm {
       tokenBAta: tokenBAccount,
       instructions: preInstructions,
     } = await this.prepareTokenAccounts(
+      feePayer ?? partner,
       partner,
       tokenAMint,
       tokenBMint,
@@ -2443,6 +2455,7 @@ export class CpAmm {
    */
   async claimReward(params: ClaimRewardParams): TxBuilder {
     const {
+      feePayer,
       user,
       position,
       positionNftAccount,
@@ -2461,7 +2474,7 @@ export class CpAmm {
         this._program.provider.connection,
         rewardInfo.mint,
         user,
-        user,
+        feePayer ?? user,
         true,
         tokenProgram
       );
