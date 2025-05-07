@@ -5,6 +5,7 @@
   - [createPool](#createpool)
   - [createCustomPool](#createcustompool)
   - [createPosition](#createposition)
+  - [getLiquidityDelta](#getliquiditydelta)
   - [getQuote](#getquote)
   - [getDepositQuote](#getdepositquote)
   - [getWithdrawQuote](#getwithdrawquote)
@@ -287,6 +288,29 @@ const result = await wallet.sendTransaction(tx, connection);
 - After creating a position, use `addLiquidity` to provide tokens
 
 ---
+
+### getLiquidityDelta
+
+Calculates the liquidity delta based on the provided token amounts and price ranges.
+
+#### Function
+```typescript
+async getLiquidityDelta(params: LiquidityDeltaParams): Promise<BN>
+```
+
+#### Parameters
+```typescript
+interface LiquidityDeltaParams {
+  maxAmountTokenA: BN;          // Maximum amount of token A to use
+  maxAmountTokenB: BN;          // Maximum amount of token B to use
+  sqrtMaxPrice: BN;             // Maximum sqrt price for the range
+  sqrtMinPrice: BN;             // Minimum sqrt price for the range
+  sqrtPrice: BN;                // Current sqrt price
+}
+```
+
+#### Returns
+A BN representing the liquidity delta in Q64 format.
 
 ### getQuote
 
