@@ -1,20 +1,15 @@
-import {
-  Connection,
-  Keypair,
-  PublicKey,
-  sendAndConfirmRawTransaction,
-} from "@solana/web3.js";
+import { Connection, Keypair, PublicKey } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
 import {
-  BASIS_POINT_MAX,
+  bpsToFeeNumerator,
   CpAmm,
   deriveConfigAddress,
-  FEE_DENOMINATOR,
   getDynamicFeeParams,
   getSqrtPriceFromPrice,
+  MAX_SQRT_PRICE,
+  MIN_SQRT_PRICE,
 } from "../src";
 import privateConfig from "./config/privateConfig.json";
-import Decimal from "decimal.js";
 
 (async () => {
   const wallet = Keypair.fromSecretKey(
@@ -31,6 +26,7 @@ import Decimal from "decimal.js";
   const configState = await cpAmm._program.account.config.fetchNullable(
     configAccount
   );
+
   const preInstruction = [];
   if (configState) {
     const instruction = await cpAmm._program.methods
@@ -44,20 +40,22 @@ import Decimal from "decimal.js";
     preInstruction.push(instruction);
   }
 
-  const sqrtMinPrice = getSqrtPriceFromPrice(
-    privateConfig.minPrice.toString(),
-    privateConfig.baseTokenDecimal,
-    privateConfig.quoteTokenDecimal
-  );
-  const sqrtMaxPrice = getSqrtPriceFromPrice(
-    privateConfig.maxPrice.toString(),
-    privateConfig.baseTokenDecimal,
-    privateConfig.quoteTokenDecimal
-  );
+  const sqrtMinPrice = privateConfig.minPrice
+    ? getSqrtPriceFromPrice(
+        privateConfig.minPrice.toString(),
+        privateConfig.baseTokenDecimal,
+        privateConfig.quoteTokenDecimal
+      )
+    : MIN_SQRT_PRICE;
+  const sqrtMaxPrice = privateConfig.maxPrice
+    ? getSqrtPriceFromPrice(
+        privateConfig.maxPrice.toString(),
+        privateConfig.baseTokenDecimal,
+        privateConfig.quoteTokenDecimal
+      )
+    : MAX_SQRT_PRICE;
 
-  const cliffFeeNumerator = new BN(
-    privateConfig.baseFeeBps * FEE_DENOMINATOR
-  ).divn(BASIS_POINT_MAX);
+  const cliffFeeNumerator = bpsToFeeNumerator(privateConfig.baseFeeBps);
 
   let dynamicFee = null;
   if (privateConfig.dynamicFee) {

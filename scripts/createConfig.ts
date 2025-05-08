@@ -198,13 +198,13 @@ export const ONE_DAY = 60 * 60 * 24;
       ).blockhash;
       transaction.sign(wallet);
 
-      const signature = await connection.sendRawTransaction(
-        transaction.serialize()
-      );
+      // const signature = await connection.sendRawTransaction(
+      //   transaction.serialize()
+      // );
 
       console.log({
         config: configAccount.toString(),
-        signature,
+        // signature,
       });
 
       feeConfig["configAccount"] = configAccount.toString();
