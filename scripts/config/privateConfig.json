@@ -10,5 +10,5 @@
     "quoteTokenDecimal": null,
     "dynamicFee": true,
     "maxPriceChangeBps": 1500,
-    "collectFeeMode": 0
+    "collectFeeMode": 1
 }
