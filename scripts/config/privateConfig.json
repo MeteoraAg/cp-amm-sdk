@@ -1,0 +1,14 @@
+{
+    "rpcUrl": "https://api.devnet.solana.com",
+    "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+    "poolCreatorAuthority": "ant1QxExAxb5hxv4DNbwJbkk67abv7dZNN8VpfK3QtS",
+    "configIndex": 1000,
+    "minPrice": null,
+    "maxPrice": null,
+    "baseFeeBps": 100,
+    "baseTokenDecimal": null,
+    "quoteTokenDecimal": null,
+    "dynamicFee": true,
+    "maxPriceChangeBps": 1500,
+    "collectFeeMode": 1
+}
