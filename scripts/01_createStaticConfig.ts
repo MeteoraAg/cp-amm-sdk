@@ -3,7 +3,7 @@ import { BN } from "@coral-xyz/anchor";
 import { CpAmm, deriveConfigAddress, MIN_SQRT_PRICE } from "../src";
 import fs from "fs";
 
-import configData from "./config/config.json";
+import configData from "./config/staticConfig.json";
 import assert from "assert";
 import { MAX_SQRT_PRICE } from "../tests/bankrun-utils";
 
@@ -163,7 +163,6 @@ export const ONE_DAY = 60 * 60 * 24;
       } = feeConfig.baseFee;
 
       const createConfigParams = {
-        index: new BN(feeConfig.index),
         poolFees: {
           baseFee: {
             cliffFeeNumerator: new BN(cliffFeeNumerator),
@@ -186,7 +185,7 @@ export const ONE_DAY = 60 * 60 * 24;
       };
 
       const transaction = await program.methods
-        .createConfig(createConfigParams)
+        .createConfig(new BN(feeConfig.index), createConfigParams)
         .accountsPartial({
           config: configAccount,
           admin: wallet.publicKey,

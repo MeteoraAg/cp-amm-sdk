@@ -7,10 +7,6 @@ import {
 import { BN } from "@coral-xyz/anchor";
 import { CpAmm, derivePoolAuthority, deriveRewardVaultAddress } from "../src";
 import rewardConfig from "./config/rewardConfig.json";
-import {
-  getAssociatedTokenAddress,
-  getAssociatedTokenAddressSync,
-} from "@solana/spl-token";
 
 (async () => {
   const wallet = Keypair.fromSecretKey(
@@ -26,26 +22,25 @@ import {
     await connection.getAccountInfo(new PublicKey(rewardConfig.rewardMint))
   ).owner;
 
+  const poolAuthority = derivePoolAuthority();
+
   const rewardVault = deriveRewardVaultAddress(
     new PublicKey(rewardConfig.poolAddress),
     rewardConfig.rewardIndex
   );
 
-  const funderTokenAccount = getAssociatedTokenAddressSync(
-    new PublicKey(rewardConfig.rewardMint),
-    wallet.publicKey,
-    true,
-    tokenProgram
-  );
-
   const transaction = await program.methods
-    .fundReward(rewardConfig.rewardIndex, new BN(1_000_000_000), false)
+    .initializeReward(
+      rewardConfig.rewardIndex,
+      new BN(rewardConfig.rewardDuration),
+      new PublicKey(rewardConfig.funder)
+    )
     .accountsPartial({
+      poolAuthority,
       pool: new PublicKey(rewardConfig.poolAddress),
       rewardVault,
       rewardMint: new PublicKey(rewardConfig.rewardMint),
-      funderTokenAccount,
-      funder: wallet.publicKey,
+      admin: wallet.publicKey,
       tokenProgram,
     })
     .transaction();
@@ -58,15 +53,15 @@ import {
 
   console.log(await connection.simulateTransaction(transaction));
 
-  const signature = await sendAndConfirmTransaction(
-    connection,
-    transaction,
-    [wallet],
-    {
-      commitment: "confirmed",
-      maxRetries: 3,
-    }
-  );
+  // const signature = await sendAndConfirmTransaction(
+  //   connection,
+  //   transaction,
+  //   [wallet],
+  //   {
+  //     commitment: "confirmed",
+  //     maxRetries: 3,
+  //   }
+  // );
 
-  console.log(`tx: ${signature}`);
+  // console.log(`tx: ${signature}`);
 })();

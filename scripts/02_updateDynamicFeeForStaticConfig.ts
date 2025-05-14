@@ -9,7 +9,7 @@ import {
 } from "../src";
 import fs from "fs";
 
-import configData from "./config/config.json";
+import configData from "./config/staticConfig.json";
 import { MAX_SQRT_PRICE } from "../tests/bankrun-utils";
 
 (async () => {
@@ -39,7 +39,6 @@ import { MAX_SQRT_PRICE } from "../tests/bankrun-utils";
         const baseFeeBps = feeNumeratorToBps(new BN(feeConfig.baseFeeValue));
         const dynamicFee = getDynamicFeeParams(baseFeeBps);
         const createConfigParams = {
-          index: new BN(feeConfig.index),
           poolFees: {
             baseFee: {
               cliffFeeNumerator: new BN(cliffFeeNumerator),
@@ -73,7 +72,7 @@ import { MAX_SQRT_PRICE } from "../tests/bankrun-utils";
           .instruction();
 
         const transaction = await program.methods
-          .createConfig(createConfigParams)
+          .createConfig(new BN(feeConfig.index), createConfigParams)
           .accountsPartial({
             config: configAccount,
             admin: wallet.publicKey,

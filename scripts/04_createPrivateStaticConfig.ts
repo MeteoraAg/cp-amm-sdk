@@ -9,19 +9,21 @@ import {
   MAX_SQRT_PRICE,
   MIN_SQRT_PRICE,
 } from "../src";
-import privateConfig from "./config/privateConfig.json";
+import privateStaticConfig from "./config/privateStaticConfig.json";
 
 (async () => {
   const wallet = Keypair.fromSecretKey(
-    Uint8Array.from(require(privateConfig.keypairFilePath))
+    Uint8Array.from(require(privateStaticConfig.keypairFilePath))
   );
 
-  const connection = new Connection(privateConfig.rpcUrl);
+  const connection = new Connection(privateStaticConfig.rpcUrl);
   const cpAmm = new CpAmm(connection);
 
   const program = cpAmm._program;
 
-  const configAccount = deriveConfigAddress(new BN(privateConfig.configIndex));
+  const configAccount = deriveConfigAddress(
+    new BN(privateStaticConfig.configIndex)
+  );
 
   const configState = await cpAmm._program.account.config.fetchNullable(
     configAccount
@@ -40,32 +42,31 @@ import privateConfig from "./config/privateConfig.json";
     preInstruction.push(instruction);
   }
 
-  const sqrtMinPrice = privateConfig.minPrice
+  const sqrtMinPrice = privateStaticConfig.minPrice
     ? getSqrtPriceFromPrice(
-        privateConfig.minPrice.toString(),
-        privateConfig.baseTokenDecimal,
-        privateConfig.quoteTokenDecimal
+        privateStaticConfig.minPrice.toString(),
+        privateStaticConfig.baseTokenDecimal,
+        privateStaticConfig.quoteTokenDecimal
       )
     : MIN_SQRT_PRICE;
-  const sqrtMaxPrice = privateConfig.maxPrice
+  const sqrtMaxPrice = privateStaticConfig.maxPrice
     ? getSqrtPriceFromPrice(
-        privateConfig.maxPrice.toString(),
-        privateConfig.baseTokenDecimal,
-        privateConfig.quoteTokenDecimal
+        privateStaticConfig.maxPrice.toString(),
+        privateStaticConfig.baseTokenDecimal,
+        privateStaticConfig.quoteTokenDecimal
       )
     : MAX_SQRT_PRICE;
 
-  const cliffFeeNumerator = bpsToFeeNumerator(privateConfig.baseFeeBps);
+  const cliffFeeNumerator = bpsToFeeNumerator(privateStaticConfig.baseFeeBps);
 
   let dynamicFee = null;
-  if (privateConfig.dynamicFee) {
+  if (privateStaticConfig.dynamicFee) {
     dynamicFee = getDynamicFeeParams(
-      privateConfig.baseFeeBps,
-      privateConfig.maxPriceChangeBps
+      privateStaticConfig.baseFeeBps,
+      privateStaticConfig.maxPriceChangeBps
     );
   }
   const createConfigParams = {
-    index: new BN(privateConfig.configIndex),
     poolFees: {
       baseFee: {
         cliffFeeNumerator: cliffFeeNumerator,
@@ -82,13 +83,15 @@ import privateConfig from "./config/privateConfig.json";
     sqrtMinPrice,
     sqrtMaxPrice,
     vaultConfigKey: PublicKey.default, // default pubkey
-    poolCreatorAuthority: new PublicKey(privateConfig.poolCreatorAuthority),
+    poolCreatorAuthority: new PublicKey(
+      privateStaticConfig.poolCreatorAuthority
+    ),
     activationType: 1, // default timestamp
-    collectFeeMode: privateConfig.collectFeeMode,
+    collectFeeMode: privateStaticConfig.collectFeeMode,
   };
 
   const transaction = await program.methods
-    .createConfig(createConfigParams)
+    .createConfig(new BN(privateStaticConfig.configIndex), createConfigParams)
     .accountsPartial({
       config: configAccount,
       admin: wallet.publicKey,
