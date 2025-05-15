@@ -35,15 +35,15 @@ import { BN } from "@coral-xyz/anchor";
 
   console.log(await connection.simulateTransaction(transaction));
 
-  //   const signature = await sendAndConfirmTransaction(
-  //     connection,
-  //     transaction,
-  //     [wallet],
-  //     {
-  //       commitment: "confirmed",
-  //       maxRetries: 3,
-  //     }
-  //   );
+  const signature = await sendAndConfirmTransaction(
+    connection,
+    transaction,
+    [wallet],
+    {
+      commitment: "confirmed",
+      maxRetries: 3,
+    }
+  );
 
-  //   console.log(`tx: ${signature}`);
+  console.log(`tx: ${signature}`);
 })();

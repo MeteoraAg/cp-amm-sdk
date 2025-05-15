@@ -1,4 +1,9 @@
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import {
+  Connection,
+  Keypair,
+  PublicKey,
+  sendAndConfirmRawTransaction,
+} from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
 import {
   bpsToFeeNumerator,
@@ -105,13 +110,13 @@ import privateStaticConfig from "./config/privateStaticConfig.json";
   transaction.sign(wallet);
   console.log(await connection.simulateTransaction(transaction));
 
-  // const signature = await sendAndConfirmRawTransaction(
-  //   connection,
-  //   transaction.serialize()
-  // );
+  const signature = await sendAndConfirmRawTransaction(
+    connection,
+    transaction.serialize()
+  );
 
-  // console.log({
-  //   config: configAccount.toString(),
-  //   signature,
-  // });
+  console.log({
+    config: configAccount.toString(),
+    signature,
+  });
 })();
