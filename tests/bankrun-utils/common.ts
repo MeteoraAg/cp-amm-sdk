@@ -140,12 +140,17 @@ export async function setupTestContext(
       partner.publicKey,
       poolCreator.publicKey,
     ].map((publicKey) =>
-      transferSol(banksClient, rootKeypair, publicKey, new BN(LAMPORTS_PER_SOL))
+      transferSol(
+        banksClient,
+        rootKeypair,
+        publicKey,
+        new BN(1_000 * LAMPORTS_PER_SOL)
+      )
     )
   );
 
   //
-  const rawAmount = 1_000_000 * 10 ** DECIMALS; // 1 millions
+  const rawAmount = 100_000_000 * 10 ** DECIMALS; // 1 millions
 
   const tokenAMintKeypair = Keypair.generate();
   const tokenBMintKeypair = Keypair.generate();

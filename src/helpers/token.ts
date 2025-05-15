@@ -97,6 +97,7 @@ export const wrapSOLInstruction = (
 
 export const unwrapSOLInstruction = async (
   owner: PublicKey,
+  receiver: PublicKey = owner,
   allowOwnerOffCurve = true
 ) => {
   const wSolATAAccount = getAssociatedTokenAddressSync(
@@ -107,7 +108,7 @@ export const unwrapSOLInstruction = async (
   if (wSolATAAccount) {
     const closedWrappedSolInstruction = createCloseAccountInstruction(
       wSolATAAccount,
-      owner,
+      receiver,
       owner,
       [],
       TOKEN_PROGRAM_ID

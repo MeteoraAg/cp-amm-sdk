@@ -86,6 +86,16 @@ export type PoolFeesParams = {
   dynamicFee: DynamicFee | null;
 };
 
+export type PrepareTokenAccountParams = {
+  payer: PublicKey;
+  tokenAOwner: PublicKey;
+  tokenBOwner: PublicKey;
+  tokenAMint: PublicKey;
+  tokenBMint: PublicKey;
+  tokenAProgram: PublicKey;
+  tokenBProgram: PublicKey;
+};
+
 export type PrepareCustomizablePoolParams = {
   pool: PublicKey;
   tokenAMint: PublicKey;
@@ -370,6 +380,7 @@ export type SwapQuotes = {
 };
 
 export type SwapParams = {
+  feePayer?: PublicKey;
   payer: PublicKey;
   pool: PublicKey;
   inputTokenMint: PublicKey;
@@ -399,6 +410,19 @@ export type LockPositionParams = {
   numberOfPeriod: number;
 };
 
+export type SetupFeeClaimAccountsParams = {
+  payer: PublicKey;
+  owner: PublicKey;
+  tokenAMint: PublicKey;
+  tokenBMint: PublicKey;
+  tokenAProgram: PublicKey;
+  tokenBProgram: PublicKey;
+  specifiedReceiver?: {
+    recipient: PublicKey;
+    tempWSolAccount: PublicKey;
+  };
+};
+
 export type ClaimPositionFeeInstructionParams = {
   owner: PublicKey;
   poolAuthority: PublicKey;
@@ -426,6 +450,11 @@ export type ClaimPositionFeeParams = {
   tokenBVault: PublicKey;
   tokenAProgram: PublicKey;
   tokenBProgram: PublicKey;
+  feePayer?: PublicKey;
+  specifiedReceiver?: {
+    recipient: PublicKey;
+    tempWSolAccount: PublicKey;
+  };
 };
 
 export type ClosePositionInstructionParams = {
@@ -478,6 +507,11 @@ export type ClaimPartnerFeeParams = {
   pool: PublicKey;
   maxAmountA: BN;
   maxAmountB: BN;
+  feePayer?: PublicKey;
+  specifiedReceiver?: {
+    recipient: PublicKey;
+    tempWSolAccount: PublicKey;
+  };
 };
 
 export type ClaimRewardParams = {
@@ -487,6 +521,7 @@ export type ClaimRewardParams = {
   positionState: PositionState;
   positionNftAccount: PublicKey;
   rewardIndex: number;
+  feePayer?: PublicKey;
 };
 
 export type RefreshVestingParams = {
