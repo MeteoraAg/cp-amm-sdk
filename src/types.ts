@@ -197,6 +197,8 @@ export type AddLiquidityParams = {
   tokenBProgram: PublicKey;
 };
 
+export type AddLiquidityAndPermanentLockParams = AddLiquidityParams;
+
 export type CreatePositionAndAddLiquidity = {
   owner: PublicKey;
   pool: PublicKey;
