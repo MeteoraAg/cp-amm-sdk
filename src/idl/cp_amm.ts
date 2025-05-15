@@ -8,7 +8,7 @@ export type CpAmm = {
   address: "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG";
   metadata: {
     name: "cpAmm";
-    version: "0.1.0";
+    version: "0.1.1";
     spec: "0.1.0";
     description: "Created with Anchor";
   };
@@ -429,38 +429,38 @@ export type CpAmm = {
               {
                 kind: "const";
                 value: [
-                  153,
-                  10,
-                  107,
-                  154,
-                  255,
-                  249,
-                  210,
+                  48,
+                  9,
+                  89,
+                  123,
+                  106,
+                  114,
+                  131,
+                  251,
+                  50,
                   173,
-                  176,
-                  67,
-                  220,
-                  214,
-                  152,
-                  71,
-                  46,
-                  146,
-                  161,
-                  33,
+                  254,
+                  250,
+                  10,
+                  80,
+                  160,
+                  84,
+                  143,
+                  100,
                   81,
-                  148,
+                  249,
+                  134,
+                  112,
+                  30,
+                  213,
+                  50,
                   166,
-                  119,
-                  5,
-                  189,
-                  142,
-                  11,
-                  57,
-                  68,
-                  162,
-                  70,
-                  126,
-                  100
+                  239,
+                  78,
+                  53,
+                  175,
+                  188,
+                  85
                 ];
               },
               {
@@ -520,38 +520,38 @@ export type CpAmm = {
               {
                 kind: "const";
                 value: [
-                  153,
-                  10,
-                  107,
-                  154,
-                  255,
-                  249,
-                  210,
+                  48,
+                  9,
+                  89,
+                  123,
+                  106,
+                  114,
+                  131,
+                  251,
+                  50,
                   173,
-                  176,
-                  67,
-                  220,
-                  214,
-                  152,
-                  71,
-                  46,
-                  146,
-                  161,
-                  33,
+                  254,
+                  250,
+                  10,
+                  80,
+                  160,
+                  84,
+                  143,
+                  100,
                   81,
-                  148,
+                  249,
+                  134,
+                  112,
+                  30,
+                  213,
+                  50,
                   166,
-                  119,
-                  5,
-                  189,
-                  142,
-                  11,
-                  57,
-                  68,
-                  162,
-                  70,
-                  126,
-                  100
+                  239,
+                  78,
+                  53,
+                  175,
+                  188,
+                  85
                 ];
               },
               {
@@ -1044,7 +1044,7 @@ export type CpAmm = {
               },
               {
                 kind: "arg";
-                path: "config_parameters.index";
+                path: "index";
               }
             ];
           };
@@ -1093,10 +1093,91 @@ export type CpAmm = {
       ];
       args: [
         {
+          name: "index";
+          type: "u64";
+        },
+        {
           name: "configParameters";
           type: {
             defined: {
-              name: "configParameters";
+              name: "staticConfigParameters";
+            };
+          };
+        }
+      ];
+    },
+    {
+      name: "createDynamicConfig";
+      discriminator: [81, 251, 122, 78, 66, 57, 208, 82];
+      accounts: [
+        {
+          name: "config";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [99, 111, 110, 102, 105, 103];
+              },
+              {
+                kind: "arg";
+                path: "index";
+              }
+            ];
+          };
+        },
+        {
+          name: "admin";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ];
+              }
+            ];
+          };
+        },
+        {
+          name: "program";
+        }
+      ];
+      args: [
+        {
+          name: "index";
+          type: "u64";
+        },
+        {
+          name: "configParameters";
+          type: {
+            defined: {
+              name: "dynamicConfigParameters";
             };
           };
         }
@@ -1846,6 +1927,242 @@ export type CpAmm = {
           type: {
             defined: {
               name: "initializePoolParameters";
+            };
+          };
+        }
+      ];
+    },
+    {
+      name: "initializePoolWithDynamicConfig";
+      discriminator: [149, 82, 72, 197, 253, 252, 68, 15];
+      accounts: [
+        {
+          name: "creator";
+        },
+        {
+          name: "positionNftMint";
+          docs: ["positionNftMint"];
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "positionNftAccount";
+          docs: ["position nft account"];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  112,
+                  111,
+                  115,
+                  105,
+                  116,
+                  105,
+                  111,
+                  110,
+                  95,
+                  110,
+                  102,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ];
+              },
+              {
+                kind: "account";
+                path: "positionNftMint";
+              }
+            ];
+          };
+        },
+        {
+          name: "payer";
+          docs: ["Address paying to create the pool. Can be anyone"];
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "poolCreatorAuthority";
+          signer: true;
+          relations: ["config"];
+        },
+        {
+          name: "config";
+          docs: ["Which config the pool belongs to."];
+        },
+        {
+          name: "poolAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ];
+              }
+            ];
+          };
+        },
+        {
+          name: "pool";
+          docs: ["Initialize an account to store the pool state"];
+          writable: true;
+        },
+        {
+          name: "position";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [112, 111, 115, 105, 116, 105, 111, 110];
+              },
+              {
+                kind: "account";
+                path: "positionNftMint";
+              }
+            ];
+          };
+        },
+        {
+          name: "tokenAMint";
+          docs: ["Token a mint"];
+        },
+        {
+          name: "tokenBMint";
+          docs: ["Token b mint"];
+        },
+        {
+          name: "tokenAVault";
+          docs: ["Token a vault for the pool"];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [116, 111, 107, 101, 110, 95, 118, 97, 117, 108, 116];
+              },
+              {
+                kind: "account";
+                path: "tokenAMint";
+              },
+              {
+                kind: "account";
+                path: "pool";
+              }
+            ];
+          };
+        },
+        {
+          name: "tokenBVault";
+          docs: ["Token b vault for the pool"];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [116, 111, 107, 101, 110, 95, 118, 97, 117, 108, 116];
+              },
+              {
+                kind: "account";
+                path: "tokenBMint";
+              },
+              {
+                kind: "account";
+                path: "pool";
+              }
+            ];
+          };
+        },
+        {
+          name: "payerTokenA";
+          docs: ["payer token a account"];
+          writable: true;
+        },
+        {
+          name: "payerTokenB";
+          docs: ["creator token b account"];
+          writable: true;
+        },
+        {
+          name: "tokenAProgram";
+          docs: ["Program to create mint account and mint tokens"];
+        },
+        {
+          name: "tokenBProgram";
+          docs: ["Program to create mint account and mint tokens"];
+        },
+        {
+          name: "token2022Program";
+          docs: [
+            "Program to create NFT mint/token account and transfer for token22 account"
+          ];
+          address: "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ];
+              }
+            ];
+          };
+        },
+        {
+          name: "program";
+        }
+      ];
+      args: [
+        {
+          name: "params";
+          type: {
+            defined: {
+              name: "initializeCustomizablePoolParameters";
             };
           };
         }
@@ -2861,6 +3178,10 @@ export type CpAmm = {
       discriminator: [131, 207, 180, 174, 180, 73, 165, 54];
     },
     {
+      name: "evtCreateDynamicConfig";
+      discriminator: [231, 197, 13, 164, 248, 213, 133, 152];
+    },
+    {
       name: "evtCreatePosition";
       discriminator: [156, 15, 119, 198, 29, 181, 221, 55];
     },
@@ -3113,6 +3434,16 @@ export type CpAmm = {
       code: 6039;
       name: "positionIsNotEmpty";
       msg: "Position is not empty";
+    },
+    {
+      code: 6040;
+      name: "invalidPoolCreatorAuthority";
+      msg: "Invalid pool creator authority";
+    },
+    {
+      code: 6041;
+      name: "invalidConfigType";
+      msg: "Invalid config type";
     }
   ];
   types: [
@@ -3313,10 +3644,15 @@ export type CpAmm = {
             type: "u8";
           },
           {
+            name: "configType";
+            docs: ["Config type mode, 0 for static, 1 for dynamic"];
+            type: "u8";
+          },
+          {
             name: "padding0";
             docs: ["padding 0"];
             type: {
-              array: ["u8", 6];
+              array: ["u8", 5];
             };
           },
           {
@@ -3345,45 +3681,13 @@ export type CpAmm = {
       };
     },
     {
-      name: "configParameters";
+      name: "dynamicConfigParameters";
       type: {
         kind: "struct";
         fields: [
           {
-            name: "poolFees";
-            type: {
-              defined: {
-                name: "poolFeeParameters";
-              };
-            };
-          },
-          {
-            name: "sqrtMinPrice";
-            type: "u128";
-          },
-          {
-            name: "sqrtMaxPrice";
-            type: "u128";
-          },
-          {
-            name: "vaultConfigKey";
-            type: "pubkey";
-          },
-          {
             name: "poolCreatorAuthority";
             type: "pubkey";
-          },
-          {
-            name: "activationType";
-            type: "u8";
-          },
-          {
-            name: "collectFeeMode";
-            type: "u8";
-          },
-          {
-            name: "index";
-            type: "u64";
           }
         ];
       };
@@ -3765,7 +4069,7 @@ export type CpAmm = {
     },
     {
       name: "evtCreateConfig";
-      docs: ["Create config"];
+      docs: ["Create static config"];
       type: {
         kind: "struct";
         fields: [
@@ -3808,6 +4112,27 @@ export type CpAmm = {
           {
             name: "config";
             type: "pubkey";
+          }
+        ];
+      };
+    },
+    {
+      name: "evtCreateDynamicConfig";
+      docs: ["Create dynamic config"];
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "config";
+            type: "pubkey";
+          },
+          {
+            name: "poolCreatorAuthority";
+            type: "pubkey";
+          },
+          {
+            name: "index";
+            type: "u64";
           }
         ];
       };
@@ -4381,14 +4706,11 @@ export type CpAmm = {
             type: "u128";
           },
           {
-            name: "tokenAReserve";
-            docs: ["token a reserve"];
-            type: "u64";
-          },
-          {
-            name: "tokenBReserve";
-            docs: ["token b reserve"];
-            type: "u64";
+            name: "padding";
+            docs: [
+              "padding, previous reserve amount, be careful to use that field"
+            ];
+            type: "u128";
           },
           {
             name: "protocolAFee";
@@ -4951,6 +5273,46 @@ export type CpAmm = {
               "These rewards will be carried over to the next reward time window."
             ];
             type: "u64";
+          }
+        ];
+      };
+    },
+    {
+      name: "staticConfigParameters";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "poolFees";
+            type: {
+              defined: {
+                name: "poolFeeParameters";
+              };
+            };
+          },
+          {
+            name: "sqrtMinPrice";
+            type: "u128";
+          },
+          {
+            name: "sqrtMaxPrice";
+            type: "u128";
+          },
+          {
+            name: "vaultConfigKey";
+            type: "pubkey";
+          },
+          {
+            name: "poolCreatorAuthority";
+            type: "pubkey";
+          },
+          {
+            name: "activationType";
+            type: "u8";
+          },
+          {
+            name: "collectFeeMode";
+            type: "u8";
           }
         ];
       };

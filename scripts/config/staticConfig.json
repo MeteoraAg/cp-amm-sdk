@@ -1,0 +1,942 @@
+{
+  "rpcUrl": "https://api.devnet.solana.com",
+  "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+  "feeConfig": [
+    {
+      "index": 0,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 2500000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 1,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 2500000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 2,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 2500000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 3,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 2500000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 4,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 3000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 5,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 3000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 6,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 3000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 7,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 3000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 8,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 10000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 9,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 10000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 10,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 10000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 11,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 10000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 12,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 20000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 13,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 20000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 14,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 20000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 15,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 20000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 16,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 40000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 17,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 40000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 18,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 40000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 19,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 40000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 20,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 60000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 21,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 60000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 22,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 60000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 23,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 60000000,
+        "numberOfPeriod": 0,
+        "reductionFactor": 0,
+        "periodFrequency": 0,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 24,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3454861,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 25,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3454861,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 26,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3454861,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 27,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3454861,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 28,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 432,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 29,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 432,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 30,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 432,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 31,
+      "baseFeeValue": 2500000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 432,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 32,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3451389,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 33,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3451389,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 34,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3451389,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 35,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3451389,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 36,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 417,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 37,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 417,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 38,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 417,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 39,
+      "baseFeeValue": 3000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 417,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 40,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3402778,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 41,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3402778,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 42,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3402778,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 43,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3402778,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 44,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 321,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 45,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 321,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 46,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 321,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 47,
+      "baseFeeValue": 10000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 321,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 48,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3333333,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 49,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3333333,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 50,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3333333,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 51,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3333333,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 52,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 265,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 53,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 265,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 54,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 265,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 55,
+      "baseFeeValue": 20000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 265,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 56,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3194444,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 57,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3194444,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 58,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3194444,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 59,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3194444,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 60,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 208,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 61,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 208,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 62,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 208,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 63,
+      "baseFeeValue": 40000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 208,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 64,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3055556,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 65,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3055556,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 66,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3055556,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 67,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 144,
+        "reductionFactor": 3055556,
+        "periodFrequency": 600,
+        "feeSchedulerMode": 0
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    },
+    {
+      "index": 68,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 175,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": true
+    },
+    {
+      "index": 69,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 175,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": true
+    },
+    {
+      "index": 70,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 175,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 1,
+      "dynamicFee": false
+    },
+    {
+      "index": 71,
+      "baseFeeValue": 60000000,
+      "baseFee": {
+        "cliffFeeNumerator": 500000000,
+        "numberOfPeriod": 120,
+        "reductionFactor": 175,
+        "periodFrequency": 60,
+        "feeSchedulerMode": 1
+      },
+      "collectFeeMode": 0,
+      "dynamicFee": false
+    }
+  ]
+}

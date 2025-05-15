@@ -1,0 +1,13 @@
+{
+    "rpcUrl": "https://api.devnet.solana.com",
+    "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+    "configAccount": "Eg2WRUF7K3bRbRmJiskNSDfeJY5c5Rbje9XCGQNWBXNZ",
+    "tokenAMint": "So11111111111111111111111111111111111111112",
+    "tokenBMint": "A9kFH4yEqfYhbXmHkMJnBsKedbJ79Gr8d4jUKYWZcU8s",
+    "maxTokenAAmount": 1,
+    "maxTokenBAmount": 150,
+    "initPrice": 150,
+    "tokenADecimal": 9,
+    "tokenBDecimal": 6,
+    "activationPoint": null
+}
