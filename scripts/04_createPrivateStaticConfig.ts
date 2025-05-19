@@ -6,9 +6,10 @@ import {
 } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
 import {
-  bpsToFeeNumerator,
   CpAmm,
   deriveConfigAddress,
+  FeeSchedulerMode,
+  getBaseFeeParams,
   getDynamicFeeParams,
   getSqrtPriceFromPrice,
   MAX_SQRT_PRICE,
@@ -62,24 +63,24 @@ import privateStaticConfig from "./config/privateStaticConfig.json";
       )
     : MAX_SQRT_PRICE;
 
-  const cliffFeeNumerator = bpsToFeeNumerator(privateStaticConfig.baseFeeBps);
+  const baseFee = getBaseFeeParams(
+    privateStaticConfig.maxBaseFee,
+    privateStaticConfig.minBaseFee,
+    FeeSchedulerMode.Exponential,
+    privateStaticConfig.numberOfPeriod,
+    privateStaticConfig.duration
+  );
 
   let dynamicFee = null;
   if (privateStaticConfig.dynamicFee) {
     dynamicFee = getDynamicFeeParams(
-      privateStaticConfig.baseFeeBps,
+      privateStaticConfig.minBaseFee,
       privateStaticConfig.maxPriceChangeBps
     );
   }
   const createConfigParams = {
     poolFees: {
-      baseFee: {
-        cliffFeeNumerator: cliffFeeNumerator,
-        numberOfPeriod: 0,
-        reductionFactor: new BN(0),
-        periodFrequency: new BN(0),
-        feeSchedulerMode: 0,
-      },
+      baseFee,
       protocolFeePercent: 20, // 20% of lp fee
       partnerFeePercent: 0,
       referralFeePercent: 20, // 20 % of protocol fee
@@ -91,7 +92,7 @@ import privateStaticConfig from "./config/privateStaticConfig.json";
     poolCreatorAuthority: new PublicKey(
       privateStaticConfig.poolCreatorAuthority
     ),
-    activationType: 1, // default timestamp
+    activationType: privateStaticConfig.activationType,
     collectFeeMode: privateStaticConfig.collectFeeMode,
   };
 
@@ -108,7 +109,18 @@ import privateStaticConfig from "./config/privateStaticConfig.json";
     await connection.getLatestBlockhash()
   ).blockhash;
   transaction.sign(wallet);
-  console.log(await connection.simulateTransaction(transaction));
+  if (privateStaticConfig.dryRun) {
+    console.log({
+      baseFee: {
+        cliffFeeNumerator: baseFee.cliffFeeNumerator.toString(),
+        numberOfPeriod: baseFee.numberOfPeriod.toString(),
+        periodFrequency: baseFee.periodFrequency.toString(),
+        reductionFactor: baseFee.reductionFactor.toString(),
+      },
+      dynamicFee,
+    });
+    console.log(await connection.simulateTransaction(transaction));
+  }
 
   const signature = await sendAndConfirmRawTransaction(
     connection,
