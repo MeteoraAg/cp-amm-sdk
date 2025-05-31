@@ -1010,7 +1010,7 @@ export class CpAmm {
       dynamicFeeParams
     );
 
-    const { amountOut, totalFee } = getSwapAmount(
+    const { amountOut, totalFee, nextSqrtPrice } = getSwapAmount(
       actualAmountIn,
       sqrtPriceQ64,
       liquidityQ64,
@@ -1039,7 +1039,7 @@ export class CpAmm {
       swapOutAmount: actualAmountOut,
       minSwapOutAmount,
       totalFee,
-      priceImpact: getPriceImpact(minSwapOutAmount, actualAmountOut),
+      priceImpact: getPriceImpact(nextSqrtPrice, sqrtPriceQ64),
     };
   }
 

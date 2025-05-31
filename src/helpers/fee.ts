@@ -189,7 +189,7 @@ export function getSwapAmount(
   tradeFeeNumerator: BN,
   aToB: boolean,
   collectFeeMode: number
-): { amountOut: BN; totalFee: BN } {
+): { amountOut: BN; totalFee: BN; nextSqrtPrice: BN } {
   let feeMode = getFeeMode(collectFeeMode, !aToB);
   let actualInAmount = inAmount;
   let totalFee = new BN(0);
@@ -199,18 +199,24 @@ export function getSwapAmount(
     actualInAmount = inAmount.sub(totalFee);
   }
 
+  const nextSqrtPrice = getNextSqrtPrice(
+    actualInAmount,
+    sqrtPrice,
+    liquidity,
+    aToB
+  );
   // Calculate the output amount based on swap direction
   const outAmount = aToB
     ? getAmountBFromLiquidityDelta(
         liquidity,
         sqrtPrice,
-        getNextSqrtPrice(actualInAmount, sqrtPrice, liquidity, true),
+        nextSqrtPrice,
         Rounding.Down
       )
     : getAmountAFromLiquidityDelta(
         liquidity,
         sqrtPrice,
-        getNextSqrtPrice(actualInAmount, sqrtPrice, liquidity, false),
+        nextSqrtPrice,
         Rounding.Down
       );
 
@@ -220,7 +226,7 @@ export function getSwapAmount(
     : ((totalFee = getTotalFeeOnAmount(outAmount, tradeFeeNumerator)),
       outAmount.sub(totalFee));
 
-  return { amountOut, totalFee };
+  return { amountOut, totalFee, nextSqrtPrice };
 }
 
 /**
