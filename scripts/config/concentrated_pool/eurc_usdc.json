@@ -1,0 +1,16 @@
+{
+    "dryRun": false,
+    "pair": "EURC-USDC",
+    "tokenAMint": "HzwqbKZw8HxMN6bF2yFZNrht3c2iXXzpKcFu7uBEDKtr",
+    "tokenBMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "maxTokenAAmount": 886.8,
+    "maxTokenBAmount": 1022,
+    "baseFee": 1,
+    "initPrice": 1.1375,
+    "minPrice": 0.7583,
+    "maxPrice": 1.70625,
+    "tokenADecimal": 6,
+    "tokenBDecimal": 6,
+    "feeCollectionMode": 0,
+    "dynamicFee": true
+}

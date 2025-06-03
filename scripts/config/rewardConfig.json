@@ -1,0 +1,9 @@
+{
+    "rpcUrl": "https://api.devnet.solana.com",
+    "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+    "rewardIndex": 0,
+    "rewardDuration": 2419200,
+    "poolAddress": "234PHyomUnVBA4NgW2NTSiATftYFmaCTpComemvrWNqJ",
+    "rewardMint": "A9kFH4yEqfYhbXmHkMJnBsKedbJ79Gr8d4jUKYWZcU8s",
+    "funder": "4JTYKJAyS7eAXQRSxvMbmqgf6ajf3LR9JrAXpVEcww2q"
+}
