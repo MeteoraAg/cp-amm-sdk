@@ -97,7 +97,7 @@ import {
 import { min, max } from "bn.js";
 
 /**
- * CpAmm SDK class to interact with the Dynamic CP-AMM
+ * CpAmm SDK class to interact with the DAMM-V2
  */
 export class CpAmm {
   _program: AmmProgram;

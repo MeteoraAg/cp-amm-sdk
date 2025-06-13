@@ -1,4 +1,4 @@
-# Dynamic CP-AMM SDK: Function Documentation
+# Dynamic DAMM-V2 SDK: Function Documentation
 
 ## Table of Contents
 - [Core Functions](#core-functions)
@@ -20,6 +20,7 @@
   - [permanentLockPosition](#permanentlockposition)
   - [refreshVesting](#refreshvesting)
   - [claimPositionFee](#claimpositionfee)
+  - [claimPositionFee2](#claimpositionfee2)
   - [claimPartnerFee](#claimpartnerfee)
   - [claimReward](#claimreward)
   - [closePosition](#closeposition)
@@ -48,6 +49,12 @@
   - [getPriceFromSqrtPrice](#getpricefromsqrtprice)
   - [getSqrtPriceFromPrice](#getsqrtpricefromprice)
   - [getUnClaimReward](#getunclaimreward)
+  - [getBaseFeeNumerator](#getbasefeenumerator)
+  - [getDynamicFeeNumerator](#getdynamicfeenumerator)
+  - [bpsToFeeNumerator](#bpstofeenumerator)
+  - [feeNumeratorToBps](#feenumeratortobps)
+  - [getBaseFeeParams](#getbasefeeparams)
+  - [getDynamicFeeParams](#getdynamicfeeparams)
 
 ---
 
@@ -78,6 +85,7 @@ interface CreatePoolParams {
   liquidityDelta: BN;            // Initial liquidity delta in Q64 format
   tokenAProgram: PublicKey;      // Token program for token A
   tokenBProgram: PublicKey;      // Token program for token B
+  isLockLiquidity?: boolean;     // true if you wanna permanent lock position after pool created.
 }
 ```
 
@@ -159,6 +167,7 @@ interface InitializeCustomizeablePoolParams {
   collectFeeMode: number;        // How fees are collected (0: normal, 1: alpha)
   activationPoint: BN;           // The slot or timestamp for activation
   activationType: number;        // 0: slot, 1: timestamp
+  isLockLiquidity?: boolean;     // true if you wanna permanent lock position after pool created.
 }
 
 interface PoolFees {
@@ -284,6 +293,7 @@ interface InitializeCustomizeablePoolWithDynamicConfigParams {
   tokenBProgram: PublicKey;      // Token program for token B
   config: PublicKey;             // dynamic config account
   poolCreatorAuthority: PublicKey; // Authority allowed to create pools with this config
+  isLockLiquidity?: boolean;     // true if you wanna permanent lock position after pool created.
 }
 ```
 
@@ -1216,6 +1226,63 @@ const claimFeeTx = await cpAmm.claimPositionFee({
 - Fees accumulate over time and should be claimed periodically
 - The SDK handles wrapping/unwrapping of SOL automatically
 
+
+### claimPositionFee2
+
+Claims accumulated fees for a position. 
+
+#### Function
+```typescript
+async claimPositionFee2(params: ClaimPositionFeeParams2): TxBuilder
+```
+
+#### Parameters
+```typescript
+interface ClaimPositionFeeParams {
+  owner: PublicKey;               // The owner of the position
+  pool: PublicKey;                // The pool address
+  position: PublicKey;            // The position address
+  positionNftAccount: PublicKey;  // The position NFT account
+  tokenAVault: PublicKey;         // The pool's token A vault
+  tokenBVault: PublicKey;         // The pool's token B vault
+  tokenAMint: PublicKey;          // The mint of token A
+  tokenBMint: PublicKey;          // The mint of token B
+  tokenAProgram: PublicKey;       // Token program for token A
+  tokenBProgram: PublicKey;       // Token program for token B
+  receiver: Pubkey;              //  The wallet that will receive the fees
+  feePayer?: PublicKey;          // Specific fee payer for transaction. Default fee payer is position's owner
+}
+```
+
+#### Returns
+A transaction builder (`TxBuilder`) that can be used to build, sign, and send the transaction.
+
+#### Example
+```typescript
+const poolState = await cpAmm.fetchPoolState(poolAddress);
+
+const claimFeeTx = await cpAmm.claimPositionFee2({
+  owner: wallet.publicKey,
+  pool: poolAddress,
+  position: positionAddress,
+  receiver: receiverAddress,
+  positionNftAccount: positionNftAccount,
+  tokenAVault: poolState.tokenAVault,
+  tokenBVault: poolState.tokenBVault,
+  tokenAMint: poolState.tokenAMint,
+  tokenBMint: poolState.tokenBMint,
+  tokenAProgram,
+  tokenBProgram
+});
+```
+
+#### Notes
+- Fees are collected when trades occur in the pool
+- Only the position owner can claim fees
+- Fees will claim to receiver address
+- Fees are earned on both token A and token B based on the amount of liquidity provided
+- The SDK handles wrapping/unwrapping of SOL automatically
+
 ---
 
 ### claimPartnerFee
@@ -2015,3 +2082,102 @@ unclaimed.rewards.forEach((reward, i) => {
   console.log(`Unclaimed reward ${i}: ${reward.toString()}`);
 });
 ```
+
+### getBaseFeeNumerator
+
+Calculates the current base fee numerator based on the configured fee scheduler mode and elapsed periods.
+#### Function
+```typescript
+function getBaseFeeNumerator(
+  feeSchedulerMode: FeeSchedulerMode,
+  cliffFeeNumerator: BN,
+  period: BN,
+  reductionFactor: BN
+): BN
+```
+
+#### Parameters
+- `feeSchedulerMode`: The fee reduction mode (Linear or Exponential)
+- `cliffFeeNumerator`: The initial maximum fee numerator (starting point)
+- `period`: The number of elapsed periods since fee reduction began
+- `reductionFactor`: The rate of fee reduction per period
+
+#### Mathematical Formulas
+
+**Linear Mode:**
+```
+fee = cliffFeeNumerator - (period × reductionFactor)
+```
+
+**Exponential Mode:**
+```
+fee = cliffFeeNumerator × (1 - reductionFactor/BASIS_POINT_MAX)^period
+```
+
+#### Returns
+- `BN`: The calculated base fee numerator for the current period
+
+
+### getDynamicFeeNumerator
+
+Calculates a dynamic fee component based on market volatility
+
+#### Function
+```typescript
+function getDynamicFeeNumerator(
+  volatilityAccumulator: BN,
+  binStep: BN,
+  variableFeeControl: BN
+): BN
+```
+
+#### Parameters
+- `volatilityAccumulator`: Accumulated measure of market volatility over time
+- `binStep`: The price bin step size used in the liquidity distribution system
+- `variableFeeControl`: Control parameter that determines how much volatility affects fees
+
+#### Mathematical Formula
+```
+squareVfaBin = (volatilityAccumulator × binStep)²
+vFee = variableFeeControl × squareVfaBin
+dynamicFee = (vFee + 99,999,999,999) ÷ 100,000,000,000
+```
+
+#### Returns
+- `BN`: The calculated dynamic fee numerator
+- Returns `0` if `variableFeeControl` is zero (dynamic fees disabled)
+
+### bpsToFeeNumerator
+
+Converts basis points to fee numerator format.
+
+#### Formula
+```
+feeNumerator = (bps × FEE_DENOMINATOR) ÷ BASIS_POINT_MAX
+```
+
+### feeNumeratorToBps
+
+Converts fee numerator back to basis points.
+
+#### Formula
+```
+bps = (feeNumerator × BASIS_POINT_MAX) ÷ FEE_DENOMINATOR
+```
+
+### getBaseFeeParams
+
+Calculates the initial parameters for a base fee
+
+#### Key Features
+- Supports both linear and exponential fee reduction
+- Validates parameter consistency
+- Calculates period frequency and reduction factors
+
+### getDynamicFeeParams
+Calculates the parameters needed for dynamic fee.
+
+#### Key Features
+- Configures volatility-based fee parameters
+- Sets maximum price change thresholds
+- Calculates variable fee control parameters

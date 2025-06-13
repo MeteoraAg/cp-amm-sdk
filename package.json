@@ -1,6 +1,6 @@
 {
 	"name": "@meteora-ag/cp-amm-sdk",
-	"version": "1.0.0",
+	"version": "1.0.9",
 	"description": "SDK for Cp Amm",
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
@@ -26,9 +26,9 @@
 		"@solana/spl-token": "^0.4.8",
 		"@solana/web3.js": "^1.95.3",
 		"@types/bn.js": "^5.1.0",
-		"chai": "^4.3.4",
 		"@types/chai": "^4.3.0",
 		"@types/mocha": "^9.0.0",
+		"chai": "^4.3.4",
 		"chain": "^0.4.0",
 		"decimal.js": "^10.4.2",
 		"invariant": "^2.2.4",

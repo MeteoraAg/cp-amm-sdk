@@ -1,4 +1,4 @@
-name: CP-AMM-SDK
+name: DAMM-SDK
 
 on:
   pull_request:
