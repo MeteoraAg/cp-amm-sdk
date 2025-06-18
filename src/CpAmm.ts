@@ -93,6 +93,7 @@ import {
   getAvailableVestingLiquidity,
   isVestingComplete,
   getAllPositionNftAccountByOwner,
+  getUnClaimReward,
 } from "./helpers";
 import { min, max } from "bn.js";
 
@@ -425,25 +426,49 @@ export class CpAmm {
 
     const instructions: TransactionInstruction[] = [];
 
-    // 1. claim position fee
-    const claimPositionFeeInstruction =
-      await this.buildClaimPositionFeeInstruction({
-        owner,
-        poolAuthority: this.poolAuthority,
-        pool,
-        position,
-        positionNftAccount,
-        tokenAAccount,
-        tokenBAccount,
-        tokenAVault,
-        tokenBVault,
-        tokenAMint,
-        tokenBMint,
-        tokenAProgram,
-        tokenBProgram,
-      });
+    // 1. claim position fee if it available
+    const unclaimedReward = getUnClaimReward(poolState, positionState);
+    const hasUnclaimedFee =
+      unclaimedReward.feeTokenA.gt(new BN(0)) ||
+      unclaimedReward.feeTokenB.gt(new BN(0));
 
-    instructions.push(claimPositionFeeInstruction);
+    if (hasUnclaimedFee) {
+      const claimPositionFeeInstruction =
+        await this.buildClaimPositionFeeInstruction({
+          owner,
+          poolAuthority: this.poolAuthority,
+          pool,
+          position,
+          positionNftAccount,
+          tokenAAccount,
+          tokenBAccount,
+          tokenAVault,
+          tokenBVault,
+          tokenAMint,
+          tokenBMint,
+          tokenAProgram,
+          tokenBProgram,
+        });
+
+      instructions.push(claimPositionFeeInstruction);
+    }
+
+    if (positionState.rewardInfos.length > 0) {
+      for (let index = 0; index < positionState.rewardInfos.length; index++) {
+        if (positionState.rewardInfos[index].rewardPendings.isZero()) continue;
+
+        const claimRewardTx = await this.claimReward({
+          user: owner,
+          position,
+          positionNftAccount,
+          rewardIndex: index,
+          poolState,
+          positionState,
+        });
+
+        instructions.push(...claimRewardTx.instructions);
+      }
+    }
 
     // 2. remove all liquidity
     const removeAllLiquidityInstruction =
@@ -628,7 +653,7 @@ export class CpAmm {
 
     let tokenAOwner = owner;
     let tokenBOwner = owner;
-    if (receiver) {
+    if (receiver && !receiver.equals(owner)) {
       tokenAOwner = tokenAIsSOL ? tempWSolAccount : receiver;
       tokenBOwner = tokenBIsSOL ? tempWSolAccount : receiver;
     }
@@ -2393,7 +2418,7 @@ export class CpAmm {
       transaction.add(...preInstructions);
     }
 
-    // 2. claim fee, remove liquidity and close position
+    // 2. claim fee, reward, remove liquidity and close position
     const liquidatePositionInstructions =
       await this.buildLiquidatePositionInstruction({
         owner,
