@@ -13,6 +13,7 @@ import {
   AccountMeta,
 } from "@solana/web3.js";
 import {
+  AddLiquidityAndPermanentLockParams,
   AddLiquidityParams,
   AmmProgram,
   BuildAddLiquidityParams,
@@ -1699,6 +1700,32 @@ export class CpAmm {
       addLiquidityInstruction,
       ...(postInstructions.length > 0 ? postInstructions : [])
     );
+
+    return transaction;
+  }
+
+  /**
+   * Builds a transaction to add liquidity and permanent lock
+   * @param {AddLiquidityAndPermanentLockParams} params - Parameters for adding liquidity and permanent lock.
+   * @returns Transaction builder.
+   */
+  async addLiquidityAndpermanentLockPosition(
+    params: AddLiquidityAndPermanentLockParams
+  ): TxBuilder {
+    const { owner, pool, position, positionNftAccount, liquidityDelta } =
+      params;
+    const transaction = await this.addLiquidity(params);
+    const permanentLockedLiquidityIx = await this._program.methods
+      .permanentLockPosition(liquidityDelta)
+      .accountsPartial({
+        position,
+        positionNftAccount,
+        pool,
+        owner,
+      })
+      .instruction();
+
+    transaction.add(permanentLockedLiquidityIx);
 
     return transaction;
   }
