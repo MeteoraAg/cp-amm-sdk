@@ -36,6 +36,17 @@ pnpm install
 pnpm test
 ```
 
+### Run script
+Example run script create config
+```
+npx ts-node scripts/createConfig.ts
+```
+
+Create private config
+```
+npx ts-node scripts/createPrivateConfig.ts
+```
+
 ## Deployments
 
 - Mainnet-beta: cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG

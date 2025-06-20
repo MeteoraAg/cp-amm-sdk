@@ -1,0 +1,6 @@
+{
+    "rpcUrl": "https://api.devnet.solana.com",
+    "keypairFilePath": "/Users/minhdo/.config/solana/id.json",
+    "poolCreatorAuthority": "4JTYKJAyS7eAXQRSxvMbmqgf6ajf3LR9JrAXpVEcww2q",
+    "configIndex": 1001
+}
